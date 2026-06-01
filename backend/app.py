@@ -7,7 +7,14 @@ from werkzeug.utils import secure_filename
 import json
 
 load_dotenv()
-app = Flask(__name__, static_folder='../')
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+PROJECT_ROOT = BASE_DIR
+if not os.path.exists(os.path.join(PROJECT_ROOT, 'index.html')):
+    PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..'))
+if not os.path.exists(PROJECT_ROOT):
+    PROJECT_ROOT = BASE_DIR
+
+app = Flask(__name__, static_folder=None)
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'masjid-assalam-secret')
 CORS(app)
@@ -232,49 +239,36 @@ def tambah_khotib():
 
 @app.route('/css/<path:filename>')
 def css_files(filename):
-    project_root = os.path.abspath(os.path.join(app.root_path, '..'))
-    return send_from_directory(os.path.join(project_root, 'css'), filename)
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'css'), filename)
 
 
 @app.route('/js/<path:filename>')
 def js_files(filename):
-    project_root = os.path.abspath(os.path.join(app.root_path, '..'))
-    return send_from_directory(os.path.join(project_root, 'js'), filename)
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'js'), filename)
 
 
 @app.route('/images/<path:filename>')
 def image_files(filename):
-    project_root = os.path.abspath(os.path.join(app.root_path, '..'))
-    return send_from_directory(os.path.join(project_root, 'images'), filename)
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'images'), filename)
 
 
 @app.route('/admin/<path:filename>')
 def admin_files(filename):
-    project_root = os.path.abspath(os.path.join(app.root_path, '..'))
-    return send_from_directory(os.path.join(project_root, 'admin'), filename)
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'admin'), filename)
 
 
 @app.route('/index.html')
 def index_html():
-    project_root = os.path.abspath(os.path.join(app.root_path, '..'))
-    return send_from_directory(project_root, 'index.html')
+    return send_from_directory(PROJECT_ROOT, 'index.html')
 
 
 @app.route('/')
 def home():
-    project_root = os.path.abspath(os.path.join(app.root_path, '..'))
-    index_path = os.path.join(project_root, 'index.html')
-    if os.path.exists(index_path):
-        return send_from_directory(project_root, 'index.html')
+    return send_from_directory(PROJECT_ROOT, 'index.html')
 
-    admin_login_path = os.path.join(project_root, 'admin', 'login.html')
-    if os.path.exists(admin_login_path):
-        return send_from_directory(os.path.join(project_root, 'admin'), 'login.html')
-
-    return jsonify({
-        'error': 'File index.html tidak ditemukan. Letakkan index.html di root proyek atau sesuaikan route /.'
-    }), 404
-
+@app.route('/<path:path>')
+def static_files(path):
+    return send_from_directory(PROJECT_ROOT, path)
 
 @app.route('/health')
 def health():
@@ -293,5 +287,7 @@ with app.app_context():
     init_db()
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=PORT)
+PORT = int(os.environ.get("PORT", 5000))
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=PORT)

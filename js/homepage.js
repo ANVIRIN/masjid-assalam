@@ -22,9 +22,13 @@ tampilJadwalSholat();
 // KEGIATAN
 async function tampilKegiatan() {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/kegiatan");
+    const backendMeta = document.querySelector('meta[name="backend-url"]');
+    const backendBase = backendMeta && backendMeta.content ? backendMeta.content.replace(/\/$/, '') : location.origin;
+    const apiUrl = `${backendBase}/api/kegiatan`;
+    const response = await fetch(apiUrl);
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      const text = await response.text().catch(() => "");
+      throw new Error(`HTTP ${response.status}: ${text}`);
     }
     const data = await response.json();
 
@@ -51,7 +55,42 @@ async function tampilKegiatan() {
   } catch (error) {
     console.error("Gagal memuat kegiatan:", error);
     document.getElementById("kegiatan-list").innerHTML =
-      "<div class='col-12 text-danger'>Gagal memuat kegiatan.</div>";
+      `<div class='col-12 text-danger'>Gagal memuat kegiatan. <small>${error.message}</small><div class="mt-2"><button class="btn btn-sm btn-outline-light" onclick="retryKegiatanWithUrl()">Coba URL backend lain</button></div></div>`;
+  }
+}
+
+async function retryKegiatanWithUrl() {
+  const input = prompt('Masukkan base URL backend (contoh: https://your-backend.up.railway.app)');
+  if (!input) return;
+  const base = input.replace(/\/$/, '');
+  const apiUrl = `${base}/api/kegiatan`;
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      const text = await response.text().catch(() => '');
+      throw new Error(`HTTP ${response.status}: ${text}`);
+    }
+    const data = await response.json();
+    if (!data || data.length === 0) {
+      document.getElementById('kegiatan-list').innerHTML = "<div class='col-12 text-center text-muted'>Belum ada kegiatan.</div>";
+      return;
+    }
+    document.getElementById('kegiatan-list').innerHTML = data
+      .map(
+        (item) => `
+        <div class="col-md-4">
+          <div class="activity-card">
+            <h4>${item.nama ?? ""}</h4>
+            <p>${item.hari ?? ""}</p>
+            <small>${item.waktu ?? ""}</small>
+            <p>${item.deskripsi ?? ""}</p>
+          </div>
+        </div>
+      `,
+      )
+      .join('');
+  } catch (err) {
+    alert('Gagal menghubungi URL yang dimasukkan: ' + err.message);
   }
 }
 

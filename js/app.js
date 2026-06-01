@@ -21,9 +21,13 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function getKegiatan() {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/kegiatan");
+    const backendMeta = document.querySelector('meta[name="backend-url"]');
+    const backendBase = backendMeta && backendMeta.content ? backendMeta.content.replace(/\/$/, '') : location.origin;
+    const apiUrl = `${backendBase}/api/kegiatan`;
+    const response = await fetch(apiUrl);
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      const text = await response.text().catch(() => "");
+      throw new Error(`HTTP ${response.status}: ${text}`);
     }
     const data = await response.json();
     renderKegiatan(data || []);

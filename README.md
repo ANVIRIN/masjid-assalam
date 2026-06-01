@@ -4,7 +4,19 @@ Project backend Flask untuk aplikasi web Masjid Assalam.
 
 ## Docker
 
-Build image:
+Build image (root Dockerfile):
+
+```bash
+docker build -t masjid-assalam .
+```
+
+Run:
+
+```bash
+docker run -p 5000:5000 masjid-assalam
+```
+
+Alternatif dengan Docker Compose:
 
 ```bash
 docker compose build

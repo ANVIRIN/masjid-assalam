@@ -3,7 +3,7 @@ let editId = null;
 // GET DATA
 async function getKegiatan() {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/kegiatan");
+    const response = await fetch("/api/kegiatan");
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -116,16 +116,13 @@ async function tambahKegiatan() {
   const payload = { nama, hari, waktu, deskripsi };
 
   if (editId) {
-    const response = await fetch(
-      `http://127.0.0.1:5000/api/kegiatan/${editId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+    const response = await fetch(`/api/kegiatan/${editId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(payload),
+    });
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -135,7 +132,7 @@ async function tambahKegiatan() {
 
     alert("Kegiatan berhasil diupdate");
   } else {
-    const response = await fetch("http://127.0.0.1:5000/api/kegiatan", {
+    const response = await fetch("/api/kegiatan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -181,7 +178,7 @@ async function hapusKegiatan(id) {
 
   if (!yakin) return;
 
-  const response = await fetch(`http://127.0.0.1:5000/api/kegiatan/${id}`, {
+  const response = await fetch(`/api/kegiatan/${id}`, {
     method: "DELETE",
   });
 

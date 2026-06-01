@@ -1,7 +1,7 @@
 // =============================== // TOTAL KEGIATAN // ===============================
 async function totalKegiatan() {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/kegiatan");
+    const response = await fetch("/api/kegiatan");
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
