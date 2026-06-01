@@ -5,15 +5,11 @@ import json
 import os
 from supabase import create_client
 from dotenv import load_dotenv
-load_dotenv()
-import os
-from dotenv import load_dotenv
-from supabase import create_client
 
 load_dotenv()
 
-SUPABASE_URL = os.getenv("https://unyxfbgwozuxhuzpsfli.supabase.co")
-SUPABASE_KEY = os.getenv("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVueXhmYmd3b3p1eGh1enBzZmxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5Njc4NjMsImV4cCI6MjA5NTU0Mzg2M30.p4xOiYO84BA9oeOfrzVrLi4dz298MQ970nL5vqwJdrg")
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise ValueError("SUPABASE env belum diisi")
