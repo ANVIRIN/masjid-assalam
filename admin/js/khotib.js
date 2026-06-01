@@ -1,6 +1,9 @@
 // =============================== // KHOTIB & IMAM // ===============================
 async function getKhotib() {
-  const { data, error } = await client.from("khotib_imam").select("*").order("tanggal", { ascending: true });
+  const { data, error } = await client
+    .from("khotib_imam")
+    .select("*")
+    .order("tanggal", { ascending: true });
   if (error) {
     console.error("Gagal memuat jadwal khotib/imam:", error);
     document.getElementById("data-khotib").innerHTML = `
@@ -84,7 +87,10 @@ async function hapusKhotib(id) {
 
 // =============================== // BILAL // ===============================
 async function getBilal() {
-  const { data, error } = await client.from("bilal_jumat").select("*").order("tanggal", { ascending: true });
+  const { data, error } = await client
+    .from("bilal_jumat")
+    .select("*")
+    .order("tanggal", { ascending: true });
   if (error) {
     console.error("Gagal memuat jadwal bilal:", error);
     document.getElementById("data-bilal").innerHTML = `
@@ -124,7 +130,9 @@ async function tambahBilal() {
     return;
   }
 
-  const { error } = await client.from("bilal_jumat").insert([{ tanggal, bilal }]);
+  const { error } = await client
+    .from("bilal_jumat")
+    .insert([{ tanggal, bilal }]);
   if (error) {
     console.error("Gagal menyimpan jadwal bilal:", error);
     alert("Gagal menyimpan jadwal: " + error.message);
@@ -146,7 +154,10 @@ async function hapusBilal(id) {
 }
 // =============================== // MUADZIN // ===============================
 async function getMuadzin() {
-  const { data, error } = await client.from("muadzin_jumat").select("*").order("tanggal", { ascending: true });
+  const { data, error } = await client
+    .from("muadzin_jumat")
+    .select("*")
+    .order("tanggal", { ascending: true });
   if (error) {
     console.error("Gagal memuat jadwal muadzin:", error);
     document.getElementById("data-muadzin").innerHTML = `
@@ -186,7 +197,9 @@ async function tambahMuadzin() {
     return;
   }
 
-  const { error } = await client.from("muadzin_jumat").insert([{ tanggal, muadzin }]);
+  const { error } = await client
+    .from("muadzin_jumat")
+    .insert([{ tanggal, muadzin }]);
   if (error) {
     console.error("Gagal menyimpan jadwal muadzin:", error);
     alert("Gagal menyimpan jadwal: " + error.message);
