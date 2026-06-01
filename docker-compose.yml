@@ -5,12 +5,12 @@ services:
       dockerfile: backend/Dockerfile
     container_name: masjid-backend
     ports:
-      - "5000:5000"
+      - "8080:8080"
     env_file:
-      - ./.env
+      - .env
     environment:
-      - PORT=5000
-      - SECRET_KEY=${SECRET_KEY:-dev-secret-key}
+      - SUPABASE_URL=https://unyxfbgwozuxhuzpsfli.supabase.co
+      - SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVueXhmYmd3b3p1eGh1enBzZmxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5Njc4NjMsImV4cCI6MjA5NTU0Mzg2M30.p4xOiYO84BA9oeOfrzVrLi4dz298MQ970nL5vqwJdrg
     volumes:
       - ./uploads:/app/uploads
       - ./data.db:/app/data.db
