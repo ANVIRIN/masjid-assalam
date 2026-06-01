@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, send_from_directory, g
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-import jsonS
+import json
 import os
 from supabase import create_client
 from dotenv import load_dotenv
