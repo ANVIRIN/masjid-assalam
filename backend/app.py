@@ -224,9 +224,5 @@ def status():
     return app.response_class(json.dumps(payload, ensure_ascii=False), mimetype='application/json; charset=utf-8')
 
 
-with app.app_context():
-    init_db()
-
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=PORT)
