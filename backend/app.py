@@ -8,10 +8,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Read Supabase credentials from environment
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Log presence/length of env vars (do not log the actual keys)
+logger.info("SUPABASE_URL present=%s", bool(SUPABASE_URL))
+logger.info("SUPABASE_KEY present=%s length=%s", bool(SUPABASE_KEY), len(SUPABASE_KEY) if SUPABASE_KEY else 0)
+
 if not SUPABASE_URL or not SUPABASE_KEY:
+    logger.error("SUPABASE env belum diisi: SUPABASE_URL=%s, SUPABASE_KEY=%s", bool(SUPABASE_URL), bool(SUPABASE_KEY))
     raise ValueError("SUPABASE env belum diisi")
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
