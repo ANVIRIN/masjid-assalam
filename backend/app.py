@@ -7,12 +7,18 @@ from werkzeug.utils import secure_filename
 import json
 
 load_dotenv()
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-PROJECT_ROOT = BASE_DIR
-if not os.path.exists(os.path.join(PROJECT_ROOT, 'index.html')):
-    PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..'))
-if not os.path.exists(PROJECT_ROOT):
-    PROJECT_ROOT = BASE_DIR
+# Determine PROJECT_ROOT dynamically
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+APP_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
+ROOT_DIR = os.path.abspath(os.path.join(APP_DIR, '..'))
+
+# Try to find project root by looking for index.html or using APP_DIR
+if os.path.exists(os.path.join(APP_DIR, 'index.html')):
+    PROJECT_ROOT = APP_DIR
+elif os.path.exists(os.path.join(ROOT_DIR, 'index.html')):
+    PROJECT_ROOT = ROOT_DIR
+else:
+    PROJECT_ROOT = APP_DIR  # Fallback to APP_DIR
 
 app = Flask(__name__, static_folder=None)
 app.config['JSON_AS_ASCII'] = False
@@ -20,8 +26,13 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'masjid-assalam-secret')
 CORS(app)
 
 PORT = int(os.getenv('PORT', 5000))
-DATABASE = os.path.abspath(os.getenv('DATABASE_PATH', 'data.db'))
-UPLOAD_FOLDER = os.path.abspath(os.getenv('UPLOAD_FOLDER', 'uploads'))
+# Database path - use /app/data.db in Docker, or relative path locally
+if os.path.exists('/.dockerenv'):  # Running in Docker
+    DATABASE = '/app/data.db'
+else:
+    DATABASE = os.path.abspath(os.getenv('DATABASE_PATH', 'data.db'))
+
+UPLOAD_FOLDER = os.path.abspath(os.getenv('UPLOAD_FOLDER', os.path.join(PROJECT_ROOT, 'uploads')))
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -201,7 +212,10 @@ def upload_galeri():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    try:
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    except:
+        return jsonify({'error': 'File not found'}), 404
 
 
 @app.route('/api/galeri/<int:id>', methods=['DELETE'])
@@ -212,7 +226,10 @@ def hapus_galeri(id):
     if row:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], os.path.basename(row['gambar']))
         if os.path.exists(file_path):
-            os.remove(file_path)
+            try:
+                os.remove(file_path)
+            except:
+                pass
     db.execute('DELETE FROM galeri WHERE id = ?', (id,))
     db.commit()
     return jsonify({'message': 'Galeri berhasil dihapus'})
@@ -239,36 +256,57 @@ def tambah_khotib():
 
 @app.route('/css/<path:filename>')
 def css_files(filename):
-    return send_from_directory(os.path.join(PROJECT_ROOT, 'css'), filename)
+    try:
+        return send_from_directory(os.path.join(PROJECT_ROOT, 'css'), filename)
+    except:
+        return jsonify({'error': 'CSS file not found'}), 404
 
 
 @app.route('/js/<path:filename>')
 def js_files(filename):
-    return send_from_directory(os.path.join(PROJECT_ROOT, 'js'), filename)
+    try:
+        return send_from_directory(os.path.join(PROJECT_ROOT, 'js'), filename)
+    except:
+        return jsonify({'error': 'JS file not found'}), 404
 
 
 @app.route('/images/<path:filename>')
 def image_files(filename):
-    return send_from_directory(os.path.join(PROJECT_ROOT, 'images'), filename)
+    try:
+        return send_from_directory(os.path.join(PROJECT_ROOT, 'images'), filename)
+    except:
+        return jsonify({'error': 'Image file not found'}), 404
 
 
 @app.route('/admin/<path:filename>')
 def admin_files(filename):
-    return send_from_directory(os.path.join(PROJECT_ROOT, 'admin'), filename)
+    try:
+        return send_from_directory(os.path.join(PROJECT_ROOT, 'admin'), filename)
+    except:
+        return jsonify({'error': 'Admin file not found'}), 404
 
 
 @app.route('/index.html')
 def index_html():
-    return send_from_directory(PROJECT_ROOT, 'index.html')
+    try:
+        return send_from_directory(PROJECT_ROOT, 'index.html')
+    except:
+        return jsonify({'error': 'Index file not found'}), 404
 
 
 @app.route('/')
 def home():
-    return send_from_directory(PROJECT_ROOT, 'index.html')
+    try:
+        return send_from_directory(PROJECT_ROOT, 'index.html')
+    except:
+        return jsonify({'error': 'Index file not found'}), 404
 
 @app.route('/<path:path>')
 def static_files(path):
-    return send_from_directory(PROJECT_ROOT, path)
+    try:
+        return send_from_directory(PROJECT_ROOT, path)
+    except:
+        return jsonify({'error': f'File not found: {path}'}), 404
 
 @app.route('/health')
 def health():
@@ -286,8 +324,6 @@ def status():
 with app.app_context():
     init_db()
 
-
-PORT = int(os.environ.get("PORT", 5000))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=PORT)
