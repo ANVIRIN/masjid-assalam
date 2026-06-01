@@ -20,10 +20,17 @@ async function tampilJadwalSholat() {
 tampilJadwalSholat();
 
 // KEGIATAN
+function getKegiatanName(item) {
+  return item.nama || item.nama_kegiatan || "";
+}
+
 async function tampilKegiatan() {
   try {
     const backendMeta = document.querySelector('meta[name="backend-url"]');
-    const backendBase = backendMeta && backendMeta.content ? backendMeta.content.replace(/\/$/, '') : location.origin;
+    const backendBase =
+      backendMeta && backendMeta.content
+        ? backendMeta.content.replace(/\/$/, "")
+        : location.origin;
     const apiUrl = `${backendBase}/api/kegiatan`;
     const response = await fetch(apiUrl);
     if (!response.ok) {
@@ -43,7 +50,7 @@ async function tampilKegiatan() {
         (item) => `
         <div class="col-md-4">
           <div class="activity-card">
-            <h4>${item.nama ?? ""}</h4>
+            <h4>${getKegiatanName(item)}</h4>
             <p>${item.hari ?? ""}</p>
             <small>${item.waktu ?? ""}</small>
             <p>${item.deskripsi ?? ""}</p>
@@ -60,27 +67,30 @@ async function tampilKegiatan() {
 }
 
 async function retryKegiatanWithUrl() {
-  const input = prompt('Masukkan base URL backend (contoh: https://your-backend.up.railway.app)');
+  const input = prompt(
+    "Masukkan base URL backend (contoh: https://your-backend.up.railway.app)",
+  );
   if (!input) return;
-  const base = input.replace(/\/$/, '');
+  const base = input.replace(/\/$/, "");
   const apiUrl = `${base}/api/kegiatan`;
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) {
-      const text = await response.text().catch(() => '');
+      const text = await response.text().catch(() => "");
       throw new Error(`HTTP ${response.status}: ${text}`);
     }
     const data = await response.json();
     if (!data || data.length === 0) {
-      document.getElementById('kegiatan-list').innerHTML = "<div class='col-12 text-center text-muted'>Belum ada kegiatan.</div>";
+      document.getElementById("kegiatan-list").innerHTML =
+        "<div class='col-12 text-center text-muted'>Belum ada kegiatan.</div>";
       return;
     }
-    document.getElementById('kegiatan-list').innerHTML = data
+    document.getElementById("kegiatan-list").innerHTML = data
       .map(
         (item) => `
         <div class="col-md-4">
           <div class="activity-card">
-            <h4>${item.nama ?? ""}</h4>
+            <h4>${getKegiatanName(item)}</h4>
             <p>${item.hari ?? ""}</p>
             <small>${item.waktu ?? ""}</small>
             <p>${item.deskripsi ?? ""}</p>
@@ -88,9 +98,9 @@ async function retryKegiatanWithUrl() {
         </div>
       `,
       )
-      .join('');
+      .join("");
   } catch (err) {
-    alert('Gagal menghubungi URL yang dimasukkan: ' + err.message);
+    alert("Gagal menghubungi URL yang dimasukkan: " + err.message);
   }
 }
 

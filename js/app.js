@@ -19,10 +19,17 @@ const SUPABASE_KEY =
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+function getKegiatanName(item) {
+  return item.nama || item.nama_kegiatan || "";
+}
+
 async function getKegiatan() {
   try {
     const backendMeta = document.querySelector('meta[name="backend-url"]');
-    const backendBase = backendMeta && backendMeta.content ? backendMeta.content.replace(/\/$/, '') : location.origin;
+    const backendBase =
+      backendMeta && backendMeta.content
+        ? backendMeta.content.replace(/\/$/, "")
+        : location.origin;
     const apiUrl = `${backendBase}/api/kegiatan`;
     const response = await fetch(apiUrl);
     if (!response.ok) {
@@ -56,7 +63,7 @@ function renderKegiatan(items) {
             <div class="col-md-4">
                 <div class="activity-card">
                     <i class="bi bi-calendar-event"></i>
-                    <h4>${item.nama ?? ""}</h4>
+                    <h4>${getKegiatanName(item)}</h4>
                     <p>${item.hari ?? ""} - ${item.waktu ?? ""}</p>
                     <p>${item.deskripsi ?? ""}</p>
                 </div>

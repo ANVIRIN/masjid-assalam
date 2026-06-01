@@ -1,5 +1,40 @@
 let editId = null;
 
+function getKegiatanName(item) {
+  return item.nama || item.nama_kegiatan || "";
+}
+
+function escapeAttr(value) {
+  return String(value || "")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function attachKegiatanEventHandlers() {
+  document.querySelectorAll("#data-kegiatan .btn-edit").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const row = event.currentTarget.closest("tr");
+      if (!row) return;
+      editKegiatan(
+        row.dataset.id,
+        row.dataset.nama,
+        row.dataset.hari,
+        row.dataset.waktu,
+        row.dataset.deskripsi,
+      );
+    });
+  });
+
+  document.querySelectorAll("#data-kegiatan .btn-delete").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const row = event.currentTarget.closest("tr");
+      if (!row) return;
+      hapusKegiatan(row.dataset.id);
+    });
+  });
+}
+
 // GET DATA
 async function getKegiatan() {
   try {
@@ -25,52 +60,36 @@ async function getKegiatan() {
     } else {
       data.forEach((item) => {
         html += `
-        <tr>
+        <tr data-id="${escapeAttr(item.id)}" data-nama="${escapeAttr(getKegiatanName(item))}" data-hari="${escapeAttr(item.hari)}" data-waktu="${escapeAttr(item.waktu)}" data-deskripsi="${escapeAttr(item.deskripsi)}">
 
             <td>
                 <strong>
-                  ${item.nama}
+                  ${getKegiatanName(item)}
                 </strong>
             </td>
 
             <td>
-                ${item.hari}
+                ${item.hari || ""}
             </td>
 
             <td>
-                ${item.waktu}
+                ${item.waktu || ""}
             </td>
 
             <td>
-                ${item.deskripsi}
+                ${item.deskripsi || ""}
             </td>
 
             <td>
 
-                <button
-                onclick="editKegiatan(
-                  ${item.id},
-                  '${item.nama}',
-                  '${item.hari}',
-                  '${item.waktu}',
-                  '${item.deskripsi}'
-                )"
-                class="btn-edit">
-
+                <button type="button" class="btn-edit btn-edit-row">
                     <i class="bi bi-pencil"></i>
-
                     Edit
-
                 </button>
 
-                <button
-                onclick="hapusKegiatan(${item.id})"
-                class="btn-delete">
-
+                <button type="button" class="btn-delete btn-delete-row">
                     <i class="bi bi-trash"></i>
-
                     Hapus
-
                 </button>
 
             </td>
@@ -81,6 +100,7 @@ async function getKegiatan() {
     }
 
     document.getElementById("data-kegiatan").innerHTML = html;
+    attachKegiatanEventHandlers();
   } catch (error) {
     console.error(error);
     document.getElementById("data-kegiatan").innerHTML = `

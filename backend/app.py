@@ -1,17 +1,16 @@
 from flask import Flask, jsonify, request, send_from_directory, g
 from flask_cors import CORS
-from dotenv import load_dotenv
-import os
-from supabase import create_client
 from werkzeug.utils import secure_filename
 import json
-
-SUPABASE_URL = os.getenv("https://unyxfbgwozuxhuzpsfli.supabase.co")
-SUPABASE_KEY = os.getenv("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVueXhmYmd3b3p1eGh1enBzZmxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5Njc4NjMsImV4cCI6MjA5NTU0Mzg2M30.p4xOiYO84BA9oeOfrzVrLi4dz298MQ970nL5vqwJdrg")
+import os
+from supabase import create_client
+from dotenv import load_dotenv
+load_dotenv()
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-load_dotenv()
 # Determine PROJECT_ROOT dynamically
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 APP_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
@@ -30,13 +29,7 @@ app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'masjid-assalam-secret')
 CORS(app)
 
-PORT = int(os.getenv('PORT', 5000))
-# Database path - use /app/data.db in Docker, or relative path locally
-if os.path.exists('/.dockerenv'):  # Running in Docker
-    DATABASE = '/app/data.db'
-else:
-    DATABASE = os.path.abspath(os.getenv('DATABASE_PATH', 'data.db'))
-
+PORT = int(os.getenv('PORT', 8080))
 UPLOAD_FOLDER = os.path.abspath(os.getenv('UPLOAD_FOLDER', os.path.join(PROJECT_ROOT, 'uploads')))
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -46,35 +39,48 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/api/kegiatan', methods=['GET'])
 def get_kegiatan():
     response = supabase.table("kegiatan").select("*").execute()
-    return jsonify(response.data)
+    records = response.data or []
+    for record in records:
+        if "nama_kegiatan" in record and "nama" not in record:
+            record["nama"] = record.get("nama_kegiatan")
+    return jsonify(records)
 
 
 @app.route('/api/kegiatan', methods=['POST'])
 def tambah_kegiatan():
     data = request.json
+    nama_value = data.get("nama") or data.get("nama_kegiatan")
 
     response = supabase.table("kegiatan").insert({
-        "nama_kegiatan": data.get("nama_kegiatan"),
+        "nama_kegiatan": nama_value,
         "hari": data.get("hari"),
         "waktu": data.get("waktu"),
         "deskripsi": data.get("deskripsi")
     }).execute()
 
-    return jsonify(response.data)
+    inserted = response.data or []
+    if inserted:
+        inserted[0]["nama"] = inserted[0].get("nama_kegiatan")
+    return jsonify(inserted)
 
 
 @app.route('/api/kegiatan/<int:id>', methods=['PUT'])
 def edit_kegiatan(id):
     data = request.json
+    nama_value = data.get("nama") or data.get("nama_kegiatan")
 
     response = supabase.table("kegiatan").update({
-        "nama_kegiatan": data.get("nama_kegiatan"),
+        "nama_kegiatan": nama_value,
         "hari": data.get("hari"),
         "waktu": data.get("waktu"),
         "deskripsi": data.get("deskripsi")
     }).eq("id", id).execute()
 
-    return jsonify(response.data)
+    updated = response.data or []
+    for record in updated:
+        if "nama_kegiatan" in record and "nama" not in record:
+            record["nama"] = record.get("nama_kegiatan")
+    return jsonify(updated)
 
 
 @app.route('/api/kegiatan/<int:id>', methods=['DELETE'])
@@ -219,10 +225,10 @@ def health():
 @app.route('/api/status')
 def status():
     payload = {
-        'message': 'Backend Masjid Besar Assalam Aktif ??'
+        'message': 'Backend Masjid Besar Assalam Aktif'
     }
     return app.response_class(json.dumps(payload, ensure_ascii=False), mimetype='application/json; charset=utf-8')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host="0.0.0.0", port=8080, debug=True)
