@@ -28,16 +28,17 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Determine PROJECT_ROOT dynamically
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-APP_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
-ROOT_DIR = os.path.abspath(os.path.join(APP_DIR, '..'))
+CANDIDATE_ROOTS = [
+    BASE_DIR,
+    os.path.abspath(os.path.join(BASE_DIR, '..')),
+    os.path.abspath(os.path.join(BASE_DIR, '..', '..')),
+]
 
-# Try to find project root by looking for index.html or using APP_DIR
-if os.path.exists(os.path.join(APP_DIR, 'index.html')):
-    PROJECT_ROOT = APP_DIR
-elif os.path.exists(os.path.join(ROOT_DIR, 'index.html')):
-    PROJECT_ROOT = ROOT_DIR
-else:
-    PROJECT_ROOT = APP_DIR  # Fallback to APP_DIR
+PROJECT_ROOT = BASE_DIR
+for candidate in CANDIDATE_ROOTS:
+    if os.path.exists(os.path.join(candidate, 'index.html')):
+        PROJECT_ROOT = candidate
+        break
 
 app = Flask(__name__, static_folder=None)
 app.config['JSON_AS_ASCII'] = False
