@@ -3,16 +3,17 @@
 Project backend Flask untuk aplikasi web Masjid Assalam.
 
 ## Docker
+
 ## Railway Deployment
 
 Proyek ini dikonfigurasi untuk deployment di Railway. Lihat [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) untuk panduan lengkap.
 
 ### Quick Start Railway
+
 1. Push ke GitHub
 2. Buat project baru di Railway dan connect ke repo
 3. Set environment variables di Railway dashboard
 4. Railway akan otomatis build dan deploy menggunakan `railway.json`
-
 
 Build image (root Dockerfile):
 
@@ -27,8 +28,7 @@ Build dengan backend Dockerfile:
 docker build -f backend/Dockerfile -t masjid-assalam .
 ```
 
-
-```bash
+````bash
 docker run -p 5000:5000 masjid-assalam
 docker run -p 5000:5000 \
 	-e SECRET_KEY=your-secret-key \
@@ -39,20 +39,22 @@ Alternatif dengan Docker Compose:
 Dengan Docker Compose:
 ```bash
 docker compose build
-```
-```
+````
+
+````
 
 Run di background:
 
 ```bash
 docker compose up -d
-```
+````
 
 ## Environment
 
 Salin file contoh:
 Buat file `.env` di root project atau set environment variables:
-```bash
+
+````bash
 cp backend/.env.example backend/.env
 cp .env.example .env
 
@@ -71,7 +73,7 @@ UPLOAD_FOLDER=uploads
 ### Files Modified
 - **backend/Dockerfile**: Updated untuk copy semua file statis frontend
 - **Dockerfile**: Updated untuk konsistensi dengan backend/Dockerfile
-- **backend/app.py**: 
+- **backend/app.py**:
 	- Better PROJECT_ROOT detection (handles Docker environment)
 	- Automatic database path configuration
 	- Improved error handling untuk static file routes dengan try-except
@@ -101,3 +103,4 @@ UPLOAD_FOLDER=uploads
 - Backend sekarang menggunakan SQLite untuk menyimpan data.
 - Upload gambar disimpan di `backend/uploads`.
 - Jangan commit `backend/.env`, `.venv`, atau `uploads/`.
+````
