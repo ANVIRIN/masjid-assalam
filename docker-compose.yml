@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: masjid-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/data.db:/app/data.db
+    restart: unless-stopped

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Masjid Besar Assalam</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="#">
+            🕌 Masjid Besar Assalam
+        </a>
+
+        <button class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Beranda</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#jadwal">Jadwal</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#kegiatan">Kegiatan</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#donasi">Donasi</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#galeri">Galeri</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#khotib_imam">Jadwal Khotib & Imam</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#pengumuman">Pengumuman</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#lokasi">Lokasi</a>
+                </li>
+
+                <li class="nav-item"> 
+                    <a class="nav-link" href="admin/login.html"> Admin </a> 
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="container">
+
+        <div class="row align-items-center hero-content text-center mb-5">
+
+            <div class="col-lg-6 text-white" data-aos="fade-right">
+
+                <h1 class="hero-title">
+                    Masjid Besar Assalam
+                </h1>
+
+                <p class="hero-text">
+                    Pusat Dakwah, Ibadah dan Kegiatan Islam
+                    di Gempol Pasuruan.
+                </p>
+
+                <div class="mt-4">
+
+                    <a href="#jadwal"
+                    class="btn btn-warning btn-lg me-2">
+                        Jadwal Sholat
+                    </a>
+
+                    <a href="#donasi"
+                    class="btn btn-success btn-lg">
+                        Donasi
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Jadwal Sholat -->
+            <div class="col-lg-5 offset-lg-1" data-aos="fade-left">
+
+                <div class="prayer-card">
+
+                    <h3 class="mb-4">
+                        Jadwal Sholat Hari Ini
+                    </h3>
+                    
+                    <div class="prayer-item">
+                        <span>Subuh</span>
+                        <span id="subuh">04:30</span>
+                    </div>
+
+                    <div class="prayer-item">
+                        <span>Dzuhur</span>
+                        <span id="dzuhur">11:50</span>
+                    </div>
+
+                    <div class="prayer-item">
+                        <span>Ashar</span>
+                        <span id="ashar">15:10</span>
+                    </div>
+
+                    <div class="prayer-item">
+                        <span>Maghrib</span>
+                        <span id="maghrib">17:40</span>
+                    </div>
+
+                    <div class="prayer-item">
+                        <span>Isya</span>
+                        <span id="isya">18:50</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- GALERI -->
+<section class="galeri-section py-5" id="galeri">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Galeri Masjid
+            </h2>
+
+            <p>
+                Dokumentasi kegiatan dan suasana Masjid Besar Assalam
+            </p>
+
+        </div>
+
+        <!-- SLIDER -->
+        <div id="galeriCarousel"
+        class="carousel slide"
+        data-bs-ride="carousel"
+        data-bs-interval="3000">
+
+            <!-- DATA DARI JS -->
+            <div class="carousel-inner"
+            id="homepage-galeri">
+
+            </div>
+
+            <!-- BUTTON -->
+            <button class="carousel-control-prev"
+            type="button"
+            data-bs-target="#galeriCarousel"
+            data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon"></span>
+
+            </button>
+
+            <button class="carousel-control-next"
+            type="button"
+            data-bs-target="#galeriCarousel"
+            data-bs-slide="next">
+
+                <span class="carousel-control-next-icon"></span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- KEGIATAN --> 
+<section class="kegiatan py-5" id="kegiatan">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title"> Kegiatan Rutin Masjid </h2>
+            <p> Jadwal kegiatan terbaru Masjid Besar Assalam </p>
+        </div> <!-- DATA DARI SUPABASE -->
+        <div class="row g-4" id="kegiatan-list"> </div>
+    </div>
+</section>
+
+<!-- PENGUMUMAN --> 
+<section class="pengumuman py-5 bg-light" id="pengumuman">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title"> Pengumuman Masjid </h2>
+        </div> <!-- DATA DARI SUPABASE -->
+        <div id="homepage-pengumuman"> </div>
+    </div>
+</section>
+
+<!-- KHOTIB & IMAM -->
+<section class="py-5" id="khotib_imam">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title"> Jadwal Khotib & Imam </h2>
+        </div>
+        <div class="modern-table table-responsive mb-5">
+            <table class="table table-bordered">
+                <thead class="table-success">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Khotib</th>
+                        <th>Imam</th>
+                    </tr>
+                </thead>
+                <tbody id="homepage-khotib"> </tbody>
+            </table>
+        </div>
+    </div>
+</section> 
+<!-- BILAL -->
+<section class="pb-5" id="bilal_jumat">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="section-title"> Jadwal Bilal Jum'at </h2>
+        </div>
+        <div class="modern-table table-responsive mb-5">
+            <table class="table table-bordered">
+                <thead class="table-warning">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Bilal</th>
+                    </tr>
+                </thead>
+                <tbody id="homepage-bilal"> </tbody>
+            </table>
+        </div>
+    </div>
+</section> 
+<!-- MUADZIN -->
+<section class="pb-5" id="muadzin_jumat">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="section-title"> Jadwal Muadzin Jum'at </h2>
+        </div>
+        <div class="modern-table table-responsive mb-5">
+            <table class="table table-bordered">
+                <thead class="table-info">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Muadzin</th>
+                    </tr>
+                </thead>
+                <tbody id="homepage-muadzin"> </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- LOKASI MASJID -->
+<section class="py-5" id="lokasi">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Lokasi Masjid
+            </h2>
+
+            <p class="section-subtitle">
+                Temukan lokasi Masjid Besar Assalam dengan mudah
+            </p>
+
+        </div>
+
+        <div class="location-wrapper">
+
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-5">
+
+                    <div class="location-card-modern">
+
+                        <h3>
+                            🕌 Masjid Besar Assalam
+                        </h3>
+
+                        <p>
+                            FM2W+VVJ, Jl. Raya Pabean,
+                            Kaumanbaru, Gempol,
+                            Pasuruan, Jawa Timur
+                        </p>
+
+                        <a href="https://www.google.com/maps/place/Masjid+Besar+Assalam+Gempol/"
+                        target="_blank"
+                        class="btn btn-warning btn-lg mt-4">
+
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Buka Google Maps
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-7">
+
+                    <div class="map-modern">
+
+                        <iframe
+                        src="https://maps.google.com/maps?q=Masjid%20Besar%20Assalam%20Gempol&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="450"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy">
+                        </iframe>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- DONASI -->
+<section class="donasi py-5" id="donasi">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 text-center">
+
+                <img src="{{ url_for('static', filename='images/qris.jpeg') }}" class="img-fluid qris-img">
+
+            </div>
+
+            <div class="col-lg-6 text-white">
+
+                <h2>Donasi Kas Masjid</h2>
+
+                <p>
+                    Mari dukung kegiatan Masjid Besar Assalam
+                    melalui donasi terbaik Anda.
+                </p>
+
+                <h5>BCA Syariah</h5>
+                <h4>0700056484</h4>
+
+                <a href="#"
+                class="btn btn-warning mt-3">
+                    Konfirmasi WhatsApp
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-modern">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+            <!-- BRAND -->
+            <div class="col-lg-4">
+
+                <h3 class="footer-logo">
+                    🕌 Masjid Besar Assalam
+                </h3>
+
+                <p class="footer-text">
+                    Pusat Dakwah, Ibadah dan Kegiatan Islam
+                    di Gempol Pasuruan.
+                </p>
+
+            </div>
+
+            <!-- TAKMIR -->
+            <div class="col-lg-4">
+
+                <h4 class="footer-title">
+                    <i class="bi bi-people-fill"></i>
+                    Kontak Takmir
+                </h4>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div>
+                        <h6>Pak Anshori</h6>
+
+                        <a href="https://wa.me/6285230701221"
+                        target="_blank">
+
+                            +62 852-3070-1221
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+
+                    <div>
+                        <h6>Pak Khoiri</h6>
+
+                        <a href="https://wa.me/6285331668967"
+                        target="_blank">
+
+                            +62 853-3166-8967
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="bi bi-mic-fill"></i>
+                    </div>
+
+                    <div>
+                        <h6>Ustadz Said Arrosyid</h6>
+                        <small>Ketua Takmir</small>
+
+                        <br>
+                        <a href="https://wa.me/628993315366"
+                        target="_blank">
+
+                            +62 899-3315-366
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LOKASI -->
+            <div class="col-lg-4">
+
+                <h4 class="footer-title">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    Alamat Masjid
+                </h4>
+
+                <p class="footer-address">
+
+                    FM2W+VVJ, Jl. Raya Pabean,
+                    Kaumanbaru, Gempol,
+                    Pasuruan, Jawa Timur 67155
+
+                </p>
+
+                <a href="https://www.google.com/maps/place/Masjid+Besar+Assalam+Gempol/"
+                target="_blank"
+                class="btn btn-warning mt-3">
+
+                    <i class="bi bi-map-fill"></i>
+                    Lihat Lokasi
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <hr class="footer-line">
+
+        <div class="text-center footer-bottom">
+
+            © 2026 Masjid Besar Assalam | Dibuat dengan ❤️ oleh Tim IT Masjid
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init();
+</script>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
+
+</body>
+</html>

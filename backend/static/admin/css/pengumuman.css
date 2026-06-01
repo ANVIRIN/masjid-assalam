@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+}
+
+/* HEADER */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #1b1b1b;
+}
+
+.page-header p {
+    color: #777;
+}
+
+/* BUTTON BACK */
+.back-btn {
+    background: #0f9b6d;
+    color: white;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 16px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: #0b6b4b;
+}
+
+/* CARD */
+.modern-card {
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+/* HEADER CARD */
+.card-header-custom {
+    padding: 24px 30px;
+    background: linear-gradient(135deg, #0f9b6d, #0b6b4b);
+    color: white;
+}
+
+.card-header-custom h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* BODY */
+.card-body-custom {
+    padding: 35px;
+}
+
+/* INPUT */
+.modern-input {
+    border-radius: 18px;
+    border: 1px solid #e5e7eb;
+    padding: 16px 18px;
+    font-size: 15px;
+}
+
+.modern-input:focus {
+    box-shadow: none;
+    border-color: #0f9b6d;
+}
+
+.modern-textarea {
+    resize: none;
+}
+
+/* BUTTON */
+.btn-modern {
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-radius: 18px;
+    background: #0f9b6d;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-modern:hover {
+    background: #0b6b4b;
+    transform: translateY(-3px);
+}
+
+/* TITLE */
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* GRID */
+.announcement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* CARD PENGUMUMAN */
+.announcement-card {
+    background: white;
+    border-radius: 28px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.announcement-card:hover {
+    transform: translateY(-8px);
+}
+
+/* TOP BORDER */
+.announcement-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #0f9b6d, #10b981);
+}
+
+.announcement-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.announcement-card p {
+    color: #555;
+    line-height: 1.7;
+}
+
+.date-badge {
+    display: inline-block;
+    margin-top: 18px;
+    background: #ecfdf5;
+    color: #0f9b6d;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* DELETE */
+.btn-delete {
+    margin-top: 20px;
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 14px;
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+
+    .card-body-custom {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 26px;
+    }
+}

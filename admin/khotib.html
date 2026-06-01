@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Khotib & Imam</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
+    <!-- FONT --> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <!-- CSS --> 
+     <link rel="stylesheet" href="css/khotib.css">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5"> <!-- HEADER -->
+        <div class="page-header">
+            <div>
+                <h1> 🕌 Jadwal Khotib & Imam </h1>
+                <p> Kelola jadwal khutbah Masjid Besar Assalam </p>
+            </div> <a href="dashboard.html" class="back-btn"> <i class="bi bi-arrow-left"></i> Dashboard </a>
+        </div> <!-- KHOTIB -->
+        <div class="modern-card">
+            <div class="card-header-custom green">
+                <h3> <i class="bi bi-mic-fill"></i> Jadwal Khotib & Imam </h3>
+            </div>
+            <div class="card-body-custom"> <!-- FORM -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3"> <input type="date" id="tanggal-khotib" class="form-control modern-input"> </div>
+                    <div class="col-md-3"> <input type="text" id="khotib" placeholder="Nama Khotib"
+                            class="form-control modern-input"> </div>
+                    <div class="col-md-3"> <input type="text" id="imam" placeholder="Nama Imam"
+                            class="form-control modern-input"> </div>
+                    <div class="col-md-3"> <button onclick="tambahKhotib()" class="btn-modern green-btn"> <i
+                                class="bi bi-plus-circle"></i> Simpan </button> </div>
+                </div> <!-- TABLE -->
+                <div class="table-responsive">
+                    <table class="table modern-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Khotib</th>
+                                <th>Imam</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-khotib"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- BILAL -->
+        <div class="modern-card mt-5">
+            <div class="card-header-custom gold">
+                <h3> <i class="bi bi-volume-up-fill"></i> Jadwal Bilal Jum'at </h3>
+            </div>
+            <div class="card-body-custom">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4"> <input type="date" id="tanggal-bilal" class="form-control modern-input"> </div>
+                    <div class="col-md-4"> <input type="text" id="bilal" placeholder="Nama Bilal"
+                            class="form-control modern-input"> </div>
+                    <div class="col-md-4"> <button onclick="tambahBilal()" class="btn-modern gold-btn"> <i
+                                class="bi bi-plus-circle"></i> Simpan </button> </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table modern-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Bilal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-bilal"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- MUADZIN -->
+        <div class="modern-card mt-5">
+            <div class="card-header-custom blue">
+                <h3> <i class="bi bi-broadcast"></i> Jadwal Muadzin Jum'at </h3>
+            </div>
+            <div class="card-body-custom">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4"> <input type="date" id="tanggal-muadzin" class="form-control modern-input"> </div>
+                    <div class="col-md-4"> <input type="text" id="muadzin" placeholder="Nama Muadzin"
+                            class="form-control modern-input"> </div>
+                    <div class="col-md-4"> <button onclick="tambahMuadzin()" class="btn-modern blue-btn"> <i
+                                class="bi bi-plus-circle"></i> Simpan </button> </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table modern-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Muadzin</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-muadzin"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/khotib.js"></script>
+</body>
+
+</html>
